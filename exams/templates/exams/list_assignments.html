@@ -1,0 +1,49 @@
+{% extends 'basepage.html' %}
+
+{% block title %}Liste des examens{% endblock title %}
+
+{% block footer_javascript_page %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+{% endblock footer_javascript_page %}
+
+
+{% block content %}
+
+  <h1 class="my-5 text-center">Examens</h1>
+
+  {% include 'messages.html' %}
+
+  <table class="table table-striped table-lg" style="font-size: 120%;">
+    <thead>
+      <tr>
+        <th scope="col">UE</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date d'ouverture</th>
+        <th scope="col">Date limite de remise</th>
+        <th scope="col" class="text-center">Sujet</th>
+        <th scope="col" class="text-center">Remise</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for assign in list %}
+      <tr {% if assign.current %}class="table-warning"{% endif %}>
+        <td class="align-middle">{{ assign.ue }}</td>
+        <td class="align-middle">{{ assign.description }}</td>
+        <td class="align-middle">{{ assign.start_at }}</td>
+        <td class="align-middle">{{ assign.end_at }}</td>
+        <td class="align-middle text-center">
+        {% for f in assign.files %}
+          <a href="{{ f.file.url }}" target="_blank" class="ml-2"><i class="far {{ f.icon }}" style="font-size:150%;"></i></a>
+        {% endfor %}
+        </td>
+        <td class="align-middle text-center">
+          {% if assign.current %}
+          <a href="{% url 'upload' assignment_id=assign.id %}"><i class="fas fa-upload" style="font-size:120%;"></i></a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

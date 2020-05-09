@@ -1,0 +1,7 @@
+**/__pycache__
+**/migrations/
+/data/
+/venv/
+/static/
+/moodle/
+/db.sqlite3

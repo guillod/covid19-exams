@@ -1,0 +1,44 @@
+{% extends 'basepage.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Upload{% endblock title %}
+
+{% block head_css_page %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/css/fileinput.min.css" integrity="sha256-nDOFy4ryARCIxp1SMEp7+mGQZd7V74BnsrcDfV92qD8=" crossorigin="anonymous" />
+{% endblock head_css_page %}
+
+{% block footer_javascript_page %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/fileinput.min.js" integrity="sha256-GBUytoUcXSrI5Au33Zprj748mHKuNSB+xkRgjAGIiN0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.8/js/locales/fr.min.js" integrity="sha256-iDWLhJfQBVgfaIOuxknHsuyx53OL3dG9rWz8BAJyJ50=" crossorigin="anonymous"></script>
+<script>$("input").fileinput({language: "fr"});</script>
+{% endblock footer_javascript_page %}
+
+{% block content %}
+
+  <h1 class="my-5 text-center">Rendre un devoir</h1>
+
+  {% include 'messages.html' %}
+
+  <form method="post" class="my-5" style="font-size: 120%;" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+    {% if field != form.files %}
+    <div class="form-group">
+
+      <label for="{{ field.id_for_label }}" class="form-label-lg">{{ field.label }}</label>
+      {{ field | add_class:"form-control form-control-lg" }}
+      {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="file-upload-wrapper" lang="fr">
+      <input lang="fr" id="{{ field.id_for_label }}" name="{{ field.name }}" type="file" class="file" required multiple data-show-upload="false" data-show-caption="true" data-msg-placeholder="Sélectionner les fichiers à envoyer...">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <hr class="mb-4">
+    <button id="button" class="btn btn-primary btn-lg btn-block" type="submit">Envoyer</button>
+  </form>
+
+{% endblock %}
