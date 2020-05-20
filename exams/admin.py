@@ -12,7 +12,7 @@ class FilesInline(admin.TabularInline):
 
 class RenderedFilesInline(admin.TabularInline):
     model = RenderedFiles
-    readonly_fields = ['files_number']
+    readonly_fields = ['first_name', 'last_name', 'uploaded_at', 'files_number', ]
     extra = 0
 
     def has_change_permission(self, request, obj=None):
@@ -21,22 +21,18 @@ class RenderedFilesInline(admin.TabularInline):
         return False
 
 class AssignmentAdmin(admin.ModelAdmin):
-    list_display = ('ue', 'description', 'start_at', 'end_at')
-    fields = (('ue', 'description'), ('start_at', 'end_at'))
+    list_display = ('ue', 'description', 'start_at', 'end_at', )
+    fields = (('ue', 'description'), ('start_at', 'end_at'), )
     inlines = [FilesInline, RenderedFilesInline]
 
 class RenderedFileInline(admin.TabularInline):
     model = File
     extra = 0
 
-    def has_change_permission(self, request, obj=None):
-        return False
-    def has_add_permission(self, request, obj=None):
-        return False
-
 class OutputAdmin(admin.ModelAdmin):
-    list_display = ('assignment', 'no', 'firstname', 'lastname', 'uploaded_at', 'files_number')
-    fields = ('assignment', 'no', 'firstname', 'lastname', 'uploaded_at')
+    list_display = ('assignment', 'no', 'first_name', 'last_name', 'uploaded_at', 'files_number', )
+    fields = ('assignment', 'user', 'full_name', 'uploaded_at', )
+    readonly_fields = ('full_name', )
     inlines = [RenderedFileInline]
     list_filter = ('assignment',)
 

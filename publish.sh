@@ -1,1 +1,1 @@
-rsync -avz --exclude essais --exclude publish.sh --exclude .git --delete . guillod@guillod.org:/home/guillod/examens/
+rsync -avz --exclude essais --exclude publish.sh --exclude .git --exclude db.sqlite3 --exclude examens/settings.py --exclude backups --filter=':e- .gitignore' --delete-after . guillod@guillod.org:/home/guillod/examens/

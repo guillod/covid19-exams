@@ -16,7 +16,4 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = RenderedFiles
-        fields = ('no', 'firstname', 'lastname', )
-        widgets = {
-            'no': forms.TextInput(),
-		}
+        fields = []

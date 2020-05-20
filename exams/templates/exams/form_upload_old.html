@@ -24,10 +24,6 @@
   <h1 class="mt-5 mb-3 text-center">Téléverser un examen</h1>
   <h3 class="mb-5 text-center">{{ assignment.ue }} - {{ assignment.description }}</h3>
 
-  <div class="alert alert-danger" role="alert">
-    Ce formulaire est destiné uniquement au cas où Moodle est indisponible. Dans ce cas inclure une copie d'écran du problème rencontré en plus de votre copie d'examen.
-  </div>
-
   {% include 'messages.html' %}
 
   <form method="post" class="my-5" style="font-size: 120%;" enctype="multipart/form-data">
@@ -54,22 +50,7 @@
     {% endif %}
     </div>
     {% endfor %}
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="check" required>
-        <label class="form-check-label" for="check">
-          Je certifie avoir fait cette évaluation seul·e, sans l'aide d'une autre personne et sans recours à internet (mise à part les sites expressément autorisés).
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="check2" required>
-        <label class="form-check-label" for="check2">
-          Je certifie que je ne peux pas rendre ma copie sur Moodle et je joint ci-dessus une copie d'écran du problème rencontré.
-        </label>
-      </div>
-    </div>
+    <hr class="mb-4">
     <hr class="mb-4">
     <button id="button" class="btn btn-primary btn-lg btn-block" type="submit">Envoyer</button>
   </form>

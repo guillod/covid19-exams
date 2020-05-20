@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from django_auth_ldap.config import LDAPSearch
+import ldap
 import os
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'examens.middelwares.RemoteUserMiddleware',
 ]
 
 ROOT_URLCONF = 'examens.urls'
@@ -79,7 +83,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+    #    'NAME': 'examens',
+    #    'USER': 'examens',
+    #    'PASSWORD': 'mypassword',
+    #    'HOST': '127.0.0.1',
+    #    'PORT': '3306',
+    #}
 }
 
 
@@ -100,6 +112,24 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'examens.backends.StoreLDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_REDIRECT_URL = '/'
+
+AUTH_LDAP_SERVER_URI = "ldap://localhost:3899"
+AUTH_LDAP_BIND_DN = ""
+AUTH_LDAP_BIND_PASSWORD = ""
+AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=upmc,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
 
 
 # Internationalization
@@ -125,7 +155,7 @@ STATIC_ROOT = 'static/'
 # Uploaded FILES
 
 MEDIA_ROOT = 'data/'
-MEDIA_URL = '/data/'
+MEDIA_URL = '/'
 
 # Tags tempaltes for bootstrap
 from django.contrib.messages import constants as messages

@@ -1,0 +1,12 @@
+{% extends "basepage.html" %}
+
+{% block title %}Déconnexion{% endblock %}
+
+{% block content %}
+  <h1 class="my-5 text-center">Examens</h1>
+
+  <div class="col-md-6 mx-auto alert alert-success text-center" role="alert">
+    Vous êtes maintenant déconnecté.<br/>
+    <a href="{% url 'login'%}">Cliquer ici</a> pour vous reconnecter.
+  </div>
+{% endblock %}
