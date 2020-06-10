@@ -5,14 +5,16 @@ from django.contrib import messages
 from django.http import FileResponse, HttpResponse
 from django.utils.encoding import smart_str, uri_to_iri
 from django.urls import reverse
-import os
+from django.utils import timezone
+import os, datetime
 
 from .models import Assignment, AssignmentFile, RenderedFiles, File
 from .forms import DocumentForm
 
 @login_required
 def list_assignments(request):
-    list = Assignment.objects.order_by('start_at')
+    not_before = timezone.now() - datetime.timedelta(days=7)
+    list = Assignment.objects.filter(end_at__gte=not_before).order_by('start_at')
     return render(request, 'exams/list_assignments.html', { 'list': list })
 
 @login_required
