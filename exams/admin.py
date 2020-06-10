@@ -24,6 +24,7 @@ class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('ue', 'description', 'start_at', 'end_at', )
     fields = (('ue', 'description'), ('start_at', 'end_at'), )
     inlines = [FilesInline, RenderedFilesInline]
+    save_as = True
 
 class RenderedFileInline(admin.TabularInline):
     model = File
